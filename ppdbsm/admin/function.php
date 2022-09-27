@@ -259,4 +259,51 @@ function deletefooter($id)
     // return header('location:form_cover.php');
     echo "<script>document.location='../m_footer.php';</script>";
 }
+
+function tambahguru($data)
+{
+    $db = koneksi();
+    $nip = $data['nip'];
+    $nama = $data['nama'];
+    $jk = $data['jk'];
+    $alamat = $data['alamat'];
+    $gelar = $data['gelar'];
+        $sql = "INSERT into dataguru values ('','$nip','$nama','$jk','$alamat','$gelar')";
+        $data1 = $db->prepare($sql);
+        $data1->execute();
+        $_SESSION['sukses'] = 'Data Berhasil di tambah';
+        echo "<script>document.location='dataguru.php';</script>";
+}
+
+function editguru($data)
+{
+    $db = koneksi();
+    $id = $data['id'];
+    $nip = $data['nip'];
+    $nama = $data['nama'];
+    $jk = $data['jk'];
+    $alamat = $data['alamat'];
+    $gelar = $data['gelar'];
+    $sql = "UPDATE `dataguru` set `nip`='$nip',`nama_guru`='$nama', `jk`='$jk', `alamat`='$alamat', `gelar`='$gelar' where `id_guru`='$id'";
+    $result = $db->prepare($sql);
+    $result->execute();
+    if($result){
+    $_SESSION['update'] = 'Data Berhasil diubah';
+    echo "<script>document.location='dataguru.php';</script>";
+    }else{
+    $_SESSION['error'] = 'Data Gagal Disimpan';
+    echo "<script>document.location='dataguru.php';</script>";
+    }
+}
+
+function deleteguru($id)
+{
+    $db = koneksi();
+    $sql = "DELETE FROM dataguru where id_guru='$id'";
+    $result = $db->prepare($sql);
+    $result->execute();
+    $_SESSION['delete'] = 'Data Berhasil di hapus';
+    // return header('location:form_cover.php');
+    echo "<script>document.location='../dataguru.php';</script>";
+}
 ?>

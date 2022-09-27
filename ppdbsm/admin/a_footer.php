@@ -44,6 +44,13 @@
             </div>
         </div>
     </div>
+    <?php
+$sql = "SELECT * FROM datasiswa";
+$result5 = $db->prepare($sql);
+$result5->execute();
+$chart = $result5->fetch();
+?>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -55,6 +62,84 @@
 
     <!-- Custom scripts for all pages-->
     <script src="../asset/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>   
+<script>
+    Highcharts.chart('chartData', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Laporan Data Siswa 2022'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: {!!json_encode($chart)!!},
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total Siswa berdasarkan sekolah'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:f} </b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Jumlah Siswa{!!json_encode($all)!!}',
+        data: {!!json_encode($data)!!},
+    }]
+});
+Highcharts.chart('pieData', {
+    title: {
+        text: 'Average'
+    },
+    xAxis: {
+        categories: {!!json_encode($chart)!!}
+    },
+    labels: {
+        items: [{
+            html: '',
+            style: {
+                left: '50px',
+                top: '18px',
+                color: ( // theme
+                    Highcharts.defaultOptions.title.style &&
+                    Highcharts.defaultOptions.title.style.color
+                ) || 'black'
+            }
+        }]
+    },
+    series: [{
+        type: 'column',
+        // name: {!!json_encode($char)!!},
+        data: {!!json_encode($data)!!}
+    }, {
+        type: 'spline',
+        name: 'Average',
+        data: {!!json_encode($data)!!},
+        marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+    }
+]
+});;
+</script>
 
 </body>
 
