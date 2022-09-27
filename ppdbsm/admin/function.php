@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (empty($_SESSION['user'])) {
+    die ("403 Forbidden");
+
+}
 
 //Memulai Koneksi
 function koneksi()
