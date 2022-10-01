@@ -2,6 +2,7 @@
 session_start();
 include('../inc/koneksi.php');
 include('a_navbar.php');
+require 'function.php';
  
 if (empty($_SESSION['user'])) {
     die ("<script>alert('Anda Belum Login')</script><script>document.location='index.php';</script>");
@@ -112,8 +113,6 @@ if (empty($_SESSION['user'])) {
         </div>
     </div>
 </div>
-
-
 <?php
 include('a_footer.php');
 ?>

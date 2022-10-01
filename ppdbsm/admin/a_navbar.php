@@ -1,3 +1,13 @@
+<?php
+include('../inc/koneksi.php');
+// include('a_navbar.php');
+
+$sql = "SELECT * FROM admn_user";
+$data1 = $db->prepare($sql);
+$data1->execute();
+$data = $data1->fetch();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,7 +183,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="profil.php?id=<?= $_SESSION['user']?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>

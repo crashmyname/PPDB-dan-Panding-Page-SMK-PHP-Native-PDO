@@ -2,6 +2,7 @@
 session_start();
 include('../inc/koneksi.php');
 include('a_navbar.php');
+require 'function.php';
  
 if (empty($_SESSION['user'])) {
     die ("<script>alert('Anda Belum Login')</script><script>document.location='index.php';</script>");
@@ -34,6 +35,7 @@ if (empty($_SESSION['user'])) {
 
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Table Jurusan</h6>
+                <a href="form_jurusan.php" class="btn btn-success float-right">Tambah</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive" id="">

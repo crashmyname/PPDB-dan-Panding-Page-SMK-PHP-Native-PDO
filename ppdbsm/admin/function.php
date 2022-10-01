@@ -1,9 +1,9 @@
 <?php
 session_start();
-if (empty($_SESSION['user'])) {
-    die ("403 Forbidden");
+// if (empty($_SESSION['user'])) {
+//     die ("403 Forbidden");
 
-}
+// }
 
 //Memulai Koneksi
 function koneksi()
@@ -305,5 +305,25 @@ function deleteguru($id)
     $_SESSION['delete'] = 'Data Berhasil di hapus';
     // return header('location:form_cover.php');
     echo "<script>document.location='../dataguru.php';</script>";
+}
+
+function updateprofil($data)
+{
+    $db = koneksi();
+    $id = $data['id'];
+    $username = $data['username'];
+    $pass = $data['password'];
+    $pass = md5($pass);
+    $sql = "UPDATE `admn_user` set `username`='$username',`password`='$pass' where `id`='$id'";
+    $result = $db->prepare($sql);
+    $result->execute();
+    if($result){
+    // $_SESSION['updated'] = 'Data Berhasil diubah';
+    echo "<script>alert('Data Berhasil Diubah');</script>";
+    echo "<script>document.location='dashboard.php';</script>";
+    }else{
+    $_SESSION['error'] = 'Data Gagal Disimpan';
+    echo "<script>document.location='dashboard.php';</script>";
+    }
 }
 ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
-include('a_navbar.php');
 include('../inc/koneksi.php');
+include('a_navbar.php');
 require 'function.php';
 
 if (empty($_SESSION['user'])) {
@@ -12,6 +12,8 @@ if (empty($_SESSION['user'])) {
     $sql = "SELECT * FROM datasiswa";
     $result = $db->prepare($sql);
     $result->execute();
+    // $pecah = $result->fetch();
+    // $pecah['jurusan'];
     $data = $result->rowCount();
     // 
     $sql1 = "SELECT * FROM dataguru";
@@ -23,6 +25,19 @@ if (empty($_SESSION['user'])) {
     $result = $db->prepare($sql2);
     $result->execute();
     $data2 = $result->rowCount();
+    //
+    $sql3 = "SELECT * FROM datasiswa where jurusan='Otomatisasi Tata Kelola Perkantoran'";
+    $result = $db->prepare($sql3);
+    $result->execute();
+    $data3 = $result->rowCount();
+    $sql4 = "SELECT * FROM datasiswa where jurusan='Teknik Kendaraan Ringan Otomotif'";
+    $result = $db->prepare($sql4);
+    $result->execute();
+    $data4 = $result->rowCount();
+    $sql5 = "SELECT * FROM datasiswa where jurusan='Teknik Komputer Dan Jaringan'";
+    $result = $db->prepare($sql5);
+    $result->execute();
+    $data5 = $result->rowCount();
 
 ?>
 <!-- Content Row -->
@@ -39,7 +54,7 @@ if (empty($_SESSION['user'])) {
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -57,7 +72,7 @@ if (empty($_SESSION['user'])) {
                         <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $data1?></div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <i class="fas fa-user fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -86,32 +101,40 @@ if (empty($_SESSION['user'])) {
         </div>
     </div>
     <hr>
-    <div class="col-xl-8 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Chart Siswa</h6>
-                </div>
-                
-                <!-- Card Body -->
-                <div class="card-body">
-                        <div id="chartData"></div>
-                </div>
-            </div>
+    <div class="col-xl-12 col-lg-5">
+        <?php
+            if(isset($_SESSION['updated']))
+            {
+                ?>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <?php 
+                    echo $_SESSION['updated']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <div class="col-xl-4 col-lg-5">
+        <?php 
+                unset($_SESSION['updated']);
+            }?>
+            <h1 class="h3 mb-2 text-gray-800">Jumlah Data Siswa</h1>
+        <p class="mb-4">Berikut adalah halaman jumlah data siswa SMK Mahakarya Cikupa.</p>
+        <!-- DataTales Example -->
         <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Data Chart Siswa</h6>
-            </div>
-            
-            <!-- Card Body -->
-            <div class="card-body">
-                    <div id="pieData"></div>
-            </div>
+        <table class="table table-striped table-hover">
+            <tr align="Center">
+                <td>Total Siswa</td>
+                <td>Siswa Jurusan OTKP</td>
+                <td>Siswa Jurusan TKJ</td>
+                <td>Siswa Jurusan TKR</td>
+            </tr>
+            <tr align="Center">
+                <td><?= $data?></td>
+                <td><?= $data3?></td>
+                <td><?= $data4?></td>
+                <td><?= $data5?></td>
+            </tr>
+
+        </table>
         </div>
-</div>
+    </div>
 
     <!-- Pending Requests Card Example -->
     <!-- <div class="col-xl-3 col-md-6 mb-4">

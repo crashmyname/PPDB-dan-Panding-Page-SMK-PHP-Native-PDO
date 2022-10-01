@@ -19,6 +19,7 @@ if(isset($_POST['login']))
     //  echo "ada";
     $_SESSION['auth'] = 1;
     $_SESSION['user'] = $username;
+    // $_SESSION['id'] = $id;
     $_SESSION['role'] = $baris1['role'];
     if($baris1['role'] =="admin" ){
     echo "<script>document.location='../admin/dashboard.php';</script>";
